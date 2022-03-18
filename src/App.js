@@ -11,15 +11,37 @@ class App extends Component{
     super();
     this.state = {
       person: [{id:1,fullName:'Marwen Jammeli',img:'Images/Marwen.jpg', bio:'No pain No gain', profession:'Full Stack JS'}],
-      number : "true"
+      number : "true",
+      count: 0, 
+      intervalId: 0
     }
     //this.state = {number : "false"}
     this.clickHandler=this.clickHandler.bind(this);
   }
  clickHandler()
  {
-   this.setState(prevState=>{return {number: !prevState.number}})
+   this.setState(prevState1=>{return {number: !prevState1.number}})
  }
+ handleClick = () => {
+  const newIntervalId = setInterval(() => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        count: prevState.count + 1,
+      };
+    });
+  }, 1000);
+  
+  this.setState(prevState => {
+    return {
+      ...prevState,
+      intervalId: newIntervalId,
+    };
+  });
+}
+
+
+ 
   render (){
     
     const style={
@@ -42,7 +64,10 @@ class App extends Component{
                         </div>
                 </div>
     </div>
-    <div  style={style} ><button data-toggle="toggle" onClick={this.clickHandler}>Click me !</button></div>
+    <div  style={style} ><button data-toggle="toggle" onClick={this.clickHandler}>Click me !</button>
+    <button onClick={this.handleClick}>Start counter</button><span>The component has been rendered for {this.state.count} seconds</span></div>
+   
+  
     </div>
   );
 }}
